@@ -35,6 +35,13 @@ export default function LoginPage() {
     setError("");
     setMessage("");
 
+    const submittedName = name.trim();
+    if (mode === "signup" && !submittedName) {
+      setError("Please enter your name.");
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const next = getNextPath();
 
@@ -43,7 +50,7 @@ export default function LoginPage() {
           email,
           password,
           options: {
-            data: { name: name.trim() || email.split("@")[0] },
+            data: { name: submittedName },
           },
         });
 
@@ -109,10 +116,11 @@ export default function LoginPage() {
               <span className="text-sm font-medium">Name</span>
               <input
                 required
+                autoComplete="off"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3"
-                placeholder="Paul"
+                placeholder="Enter your name"
               />
             </label>
           )}
