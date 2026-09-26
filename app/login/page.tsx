@@ -1,13 +1,19 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+
+function getNextPath() {
+  if (typeof window === "undefined") return "/discover";
+  const value = new URLSearchParams(window.location.search).get("next");
+  return value && value.startsWith("/") && !value.startsWith("//")
+    ? value
+    : "/discover";
+}
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next") || "/discover";
 
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [name, setName] = useState("");
@@ -19,9 +25,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) router.replace(next);
+      if (data.user) router.replace(getNextPath());
     });
-  }, [next, router]);
+  }, [router]);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -30,6 +36,8 @@ export default function LoginPage() {
     setMessage("");
 
     try {
+      const next = getNextPath();
+
       if (mode === "signup") {
         const { data, error: signUpError } = await supabase.auth.signUp({
           email,
