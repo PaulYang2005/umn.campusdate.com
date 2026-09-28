@@ -125,7 +125,7 @@ export default function ProfilePage() {
               value={major}
               onChange={(e) => setMajor(e.target.value)}
               className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3"
-              placeholder="Computer Science"
+              placeholder="e.g. Biology"
             />
           </label>
 
@@ -135,18 +135,18 @@ export default function ProfilePage() {
               value={year}
               onChange={(e) => setYear(e.target.value)}
               className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3"
-              placeholder="Sophomore"
+              placeholder="e.g. Junior"
             />
           </label>
         </div>
 
         <label className="block">
           <span className="text-sm font-medium">Courses (comma separated)</span>
-          <input value={courses} onChange={(e) => setCourses(e.target.value)} placeholder="CSCI 4041, MATH 1271" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
+          <input value={courses} onChange={(e) => setCourses(e.target.value)} placeholder="e.g. BIOL 1009, WRIT 1301" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
         </label>
         <label className="block">
           <span className="text-sm font-medium">Interests (comma separated)</span>
-          <input value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="Basketball, React" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
+          <input value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="e.g. Photography, Volleyball" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
         </label>
         <label className="block">
           <span className="text-sm font-medium">Preferred group size</span>
