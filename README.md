@@ -2,6 +2,8 @@
 
 Activity-first campus matching prototype built with Next.js, TypeScript, Tailwind CSS, and Supabase.
 
+All interface examples, placeholders, and seed records must use fictional data. Do not derive demo content from a contributor's or user's real profile, courses, interests, or academic history.
+
 ## Current flow
 
 `Home → Discover/Create → Plan → Join request → Creator approval → My Groups → Group overview → AI plan / Group chat → Notifications`
@@ -103,7 +105,7 @@ Feature branches deploy as Vercel Preview deployments. Merge to `main` only afte
 ### 2026-09-26 (America/Chicago) — Course matching
 
 - Creators can add up to 10 course codes to a plan. Course labels appear on discovery cards and plan details; students can manage their own courses on the Profile page.
-- Matching compares course codes without case, spaces, or punctuation differences, so `CSCI 4041` and `csci-4041` match. The matching reason lists up to three shared courses; plans without course labels still match course names mentioned in the title, description, or category. Interest matching and recommendations continue to work.
+- Matching compares course codes without case, spaces, or punctuation differences, so `BIOL 1009` and `biol-1009` match. The matching reason lists up to three shared courses; plans without course labels still match course names mentioned in the title, description, or category. Interest matching and recommendations continue to work.
 - Apply `supabase/migrations/006_course_matching.sql` after `005_interests_matching.sql` before deploying this branch. No external matching service or key is required.
 
 ### 2026-09-26 (America/Chicago) — Availability matching

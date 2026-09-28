@@ -157,7 +157,7 @@ export default function CreatePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3"
-            placeholder="e.g. CSCI 4041 study session"
+            placeholder="e.g. BIOL 1009 exam review"
           />
         </label>
 
@@ -186,13 +186,13 @@ export default function CreatePage() {
 
         <label className="block">
           <span className="text-sm font-medium">Interest tags (comma separated)</span>
-          <input value={interests} onChange={(e) => setInterests(e.target.value)} maxLength={300} placeholder="Basketball, Photography" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
+          <input value={interests} onChange={(e) => setInterests(e.target.value)} maxLength={300} placeholder="e.g. Photography, Volleyball" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
           <span className="mt-1 block text-xs text-neutral-500">Add up to 10 interests so students with the same interests can find this plan.</span>
         </label>
 
         <label className="block">
           <span className="text-sm font-medium">Course codes (comma separated)</span>
-          <input value={courses} onChange={(e) => setCourses(e.target.value)} maxLength={300} placeholder="CSCI 4041, MATH 1271" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
+          <input value={courses} onChange={(e) => setCourses(e.target.value)} maxLength={300} placeholder="e.g. BIOL 1009, WRIT 1301" className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3" />
           <span className="mt-1 block text-xs text-neutral-500">Add up to 10 course codes so classmates can find this plan.</span>
         </label>
 
@@ -204,7 +204,7 @@ export default function CreatePage() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3"
-              placeholder="Walter Library"
+              placeholder="e.g. Coffman Memorial Union"
             />
           </label>
 
