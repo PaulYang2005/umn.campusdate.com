@@ -20,8 +20,13 @@ type TicketmasterEvent = {
 type Search = { keyword?: string; classificationName?: string; stateCode?: string; label: string; group: "Sports" | "Concerts"; matches?: RegExp };
 
 const SEARCHES: Search[] = [
-  { keyword: "Minnesota Golden Gophers Mens Basketball", label: "Gophers Men's Basketball", group: "Sports", matches: /minnesota (golden )?gophers?.*(men'?s )?basketball/i },
+  { keyword: "Minnesota Golden Gophers Mens Basketball", label: "Gophers Men's Basketball", group: "Sports", matches: /minnesota (golden )?gophers?.*men'?s basketball/i },
   { keyword: "Minnesota Golden Gophers Football", label: "Gophers Football", group: "Sports", matches: /minnesota (golden )?gophers?.*football/i },
+  { keyword: "Minnesota Golden Gophers Womens Basketball", label: "Gophers Women's Basketball", group: "Sports", matches: /minnesota (golden )?gophers?.*women'?s basketball/i },
+  { keyword: "Minnesota Golden Gophers Womens Hockey", label: "Gophers Women's Hockey", group: "Sports", matches: /minnesota (golden )?gophers?.*women'?s (ice )?hockey/i },
+  { keyword: "Minnesota Golden Gophers Mens Hockey", label: "Gophers Men's Hockey", group: "Sports", matches: /minnesota (golden )?gophers?.*men'?s (ice )?hockey/i },
+  { keyword: "Minnesota Golden Gophers Volleyball", label: "Gophers Volleyball", group: "Sports", matches: /minnesota (golden )?gophers?.*volleyball/i },
+  { keyword: "Minnesota Golden Gophers Soccer", label: "Gophers Soccer", group: "Sports", matches: /minnesota (golden )?gophers?.*soccer/i },
   { keyword: "Minnesota Vikings", label: "Minnesota Vikings", group: "Sports", matches: /minnesota vikings/i },
   { keyword: "Minnesota Twins", label: "Minnesota Twins", group: "Sports", matches: /minnesota twins/i },
   { keyword: "Minnesota Timberwolves", label: "Minnesota Timberwolves", group: "Sports", matches: /minnesota timberwolves/i },

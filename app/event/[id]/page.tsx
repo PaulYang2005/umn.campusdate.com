@@ -33,7 +33,7 @@ export default function ExternalEventDetailPage() {
 
   return (
     <section className="mx-auto max-w-3xl">
-      <Link href="/events" className="text-sm text-neutral-500">← Back to events</Link>
+      <Link href={event.source === "umn_calendar" || event.categories.some((tag) => tag.startsWith("Gophers ")) ? "/events" : "/mn-events"} className="text-sm text-neutral-500">← Back to events</Link>
       <div className="mt-5 rounded-[2rem] border border-black/5 bg-white p-7 shadow-sm">
         <div className="flex flex-wrap gap-2 text-xs font-medium">
           <span className="rounded-full bg-[#6D001F] px-3 py-1 text-white">{event.source === "umn_calendar" ? "UMN Calendar" : event.categories.includes("Concerts") ? "Concert" : "Sports"}</span>
