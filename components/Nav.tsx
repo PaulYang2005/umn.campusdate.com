@@ -58,7 +58,6 @@ export function Nav() {
         <div className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm text-neutral-700">
           <Link href="/discover">Discover</Link>
           <Link href="/events">UMN Events</Link>
-          <Link href="/mn-events">MN Events</Link>
           <Link href="/create">Create</Link>
           <Link href="/group">My Groups</Link>
 
