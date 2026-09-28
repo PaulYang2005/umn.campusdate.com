@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { fetchUmnEvents } from "@/lib/umn-events-feed";
-import { fetchTicketmasterEvents } from "@/lib/ticketmaster-events";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,23 +39,10 @@ export async function GET(request: NextRequest) {
   if (unauthorized) return unauthorized;
 
   try {
-    const ticketmasterKey = process.env.TICKETMASTER_API_KEY?.trim();
-    const [umnResult, ticketmasterResult] = await Promise.allSettled([
-      fetchUmnEvents(),
-      ticketmasterKey ? fetchTicketmasterEvents(ticketmasterKey) : Promise.resolve([]),
-    ]);
-    const warnings: string[] = [];
-    if (umnResult.status === "rejected") warnings.push(`UMN feed: ${errorMessage(umnResult.reason)}`);
-    if (ticketmasterResult.status === "rejected") warnings.push(`Ticketmaster: ${errorMessage(ticketmasterResult.reason)}`);
-    if (warnings.length) console.error("Event import warning:", warnings);
-    if (umnResult.status === "rejected" && (ticketmasterResult.status === "rejected" || !ticketmasterKey)) {
-      throw new Error(warnings.join("; "));
+    const events = await fetchUmnEvents();
+    if (events.length === 0) {
+      throw new Error("UMN Events feed returned no importable events");
     }
-    const umnEvents = umnResult.status === "fulfilled" ? umnResult.value : [];
-    const ticketmasterEvents = ticketmasterResult.status === "fulfilled" ? ticketmasterResult.value : [];
-    // Never re-import rows that have already passed the 30-day retention window.
-    const retentionCutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    const events = [...umnEvents, ...ticketmasterEvents].filter((event) => Date.parse(event.expires_at) >= retentionCutoff);
     const supabase = createSupabaseAdmin();
 
     for (let offset = 0; offset < events.length; offset += 100) {
@@ -72,8 +58,8 @@ export async function GET(request: NextRequest) {
     const { count: expired, error: expireError } = await supabase
       .from("external_events")
       .update({ status: "expired", updated_at: now }, { count: "exact" })
-      .in("source", ["umn_calendar", "ticketmaster"])
-      .in("status", ["active", "canceled"])
+      .eq("source", "umn_calendar")
+      .eq("status", "active")
       .lt("expires_at", now);
     if (expireError) throw expireError;
 
@@ -82,13 +68,11 @@ export async function GET(request: NextRequest) {
     if (cleanupError) throw cleanupError;
 
     return NextResponse.json({
-      fetched: { umn: umnEvents.length, ticketmaster: ticketmasterEvents.length },
+      fetched: events.length,
       upserted: events.length,
       expired: expired ?? 0,
       deleted: typeof deleted === "number" ? deleted : 0,
       retentionDays: 30,
-      ticketmaster: ticketmasterKey ? "configured" : "not_configured",
-      warnings,
       syncedAt: now,
     });
   } catch (error) {
